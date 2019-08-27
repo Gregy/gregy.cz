@@ -1,0 +1,84 @@
+#### Contents of the preconfiguration file (for jessie)
+### Localization
+d-i debian-installer/language string en
+d-i debian-installer/country string CZ
+d-i debian-installer/locale string en_US.UTF-8
+
+d-i keyboard-configuration/xkb-keymap select us
+
+d-i mirror/country string manual
+d-i mirror/protocol string http
+d-i mirror/http/hostname string deb.debian.org
+d-i mirror/http/directory string /debian
+
+# Suite to install.
+#d-i mirror/suite string testing
+# Suite to use for loading installer components (optional).
+#d-i mirror/udeb/suite string testing
+
+### Account setup
+# Skip creation of a root account (normal user account will be able to
+# use sudo).
+d-i passwd/root-login boolean true
+# Alternatively, to skip creation of a normal user account.
+#d-i passwd/make-user boolean false
+
+# Root password, either in clear text
+#d-i passwd/root-password password r00tme
+#d-i passwd/root-password-again password r00tme
+
+# use mkpasswd -R 3000000 -m sha-512 <pass> to generate
+d-i passwd/root-password-crypted password $6$rounds=3000000$bQtSq7CL$slX.pFmV7KR1M1lR6oKCxtC8U08cJyumJvNwOVTD4l/e4iVjoauN/eOrqRLR0NUDEM6UcptmcM9Kcb8NcIhGJ. 
+# To create a normal user account.
+d-i passwd/user-fullname string Gregy
+d-i passwd/username string gregy
+#
+d-i passwd/user-password-crypted password $6$rounds=3000000$bQtSq7CL$slX.pFmV7KR1M1lR6oKCxtC8U08cJyumJvNwOVTD4l/e4iVjoauN/eOrqRLR0NUDEM6UcptmcM9Kcb8NcIhGJ.
+# The user account will be added to some standard initial groups. To
+# override that, use this.
+#d-i passwd/user-default-groups string audio cdrom video
+
+### Clock and time zone setup
+# Controls whether or not the hardware clock is set to UTC.
+d-i clock-setup/utc boolean true
+
+# You may set this to any valid setting for $TZ; see the contents of
+# /usr/share/zoneinfo/ for valid values.
+d-i time/zone string Europe/Prague
+
+# Controls whether to use NTP to set the clock during the install
+d-i clock-setup/ntp boolean true
+# NTP server to use. The default is almost always fine here.
+#d-i clock-setup/ntp-server string ntp.example.com
+
+### Apt setup
+# You can choose to install non-free and contrib software.
+#d-i apt-setup/non-free boolean true
+#d-i apt-setup/contrib boolean true
+# Uncomment this if you don't want to use a network mirror.
+#d-i apt-setup/use_mirror boolean false
+# Select which update services to use; define the mirrors to be used.
+# Values shown below are the normal defaults.
+#d-i apt-setup/services-select multiselect security, updates
+#d-i apt-setup/security_host string security.debian.org
+
+
+### Package selection
+tasksel tasksel/first multiselect standard, ssh-server
+
+# Individual additional packages to install
+d-i pkgsel/include string vim fail2ban ntp htop
+# Whether to upgrade packages after debootstrap.
+# Allowed values: none, safe-upgrade, full-upgrade
+#d-i pkgsel/upgrade select none
+
+popularity-contest popularity-contest/participate boolean false
+
+d-i grub-installer/only_debian boolean true
+d-i grub-installer/bootdev  string default
+
+d-i preseed/late_command string \
+cd /target/root; \
+mkdir /target/root/.ssh; \
+wget https://github.com/Gregy.keys -O /target/root/.ssh/authorized_keys; \
+cp -r /target/root/.ssh /target/home/gregy/
