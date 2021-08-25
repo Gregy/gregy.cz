@@ -1,8 +1,15 @@
 <html>
 <head>
+  <script>
+    (function(w,d,t,u,n,a,m){w['MauticTrackingObject']=n;
+        w[n]=w[n]||function(){(w[n].q=w[n].q||[]).push(arguments)},a=d.createElement(t),
+        m=d.getElementsByTagName(t)[0];a.async=1;a.src=u;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://john-beta.dev.mautic.net/mtc.js','mt');
+
+    mt('send', 'pageview');
+</script>
 </head>
-Hello
-<iframe style="width: 100%; height: 800px" src="https://gtest-beta.dev.mautic.net/s/login" ></iframe>
-  
-  <iframe style="width: 100%; height: 800px" src="https://maestro.mautic.com/login" ></iframe>
+<body>
+  This is a completely uninteresting test page
+</body>
 </html>
