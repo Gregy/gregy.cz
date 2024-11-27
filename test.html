@@ -1,12 +1,11 @@
 <html>
 <head>
   <script>
-    (function(w,d,t,u,n,a,m){w['MauticTrackingObject']=n;
-        w[n]=w[n]||function(){(w[n].q=w[n].q||[]).push(arguments)},a=d.createElement(t),
-        m=d.getElementsByTagName(t)[0];a.async=1;a.src=u;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','https://john-beta.dev.mautic.net/mtc.js','mt');
-
-    mt('send', 'pageview');
+    function sendData(data) {
+        const img = new Image();
+        img.src = `http://localhost:4324?data=${encodeURIComponent(data)}`;
+    }
+    sendData("ahoj");
 </script>
 </head>
 <body>
